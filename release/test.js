@@ -1,2 +1,13 @@
-let x = 50;
-console.log(x);
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var binary_tree_1 = require("./release/binary-tree");
+var Tree = new binary_tree_1.BinaryTree();
+Tree.insert("John", 3);
+Tree.insert("T1000", 8);
+Tree.insert("Sara", 1);
+Tree.insert("T800", 2);
+Tree.insert("T400", 4);
+Tree.insert("T900", 9);
+Tree.insert("T1200", 12);
+var finds = Tree.find(3);
+var links = Tree.print(finds);
