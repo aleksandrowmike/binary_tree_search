@@ -1,4 +1,4 @@
-import * as d3 from "d3";
+// import * as d3 from "d3";
 import { BinaryTree } from "./binary-tree";
 import { BinaryTreeNode } from "./binary-tree-node";
 
@@ -17,87 +17,85 @@ Tree.insert("T1100", 11);
 Tree.insert("T1300", 13);
 Tree.insert("T1000", 10);
 
+const key: number = 3;
+const finds: BinaryTreeNode<string> = Tree.find(key);
 
-const finds: BinaryTreeNode<string> = Tree.find(3);
-const links: object = Tree.print(finds);
+console.log(finds.printNode());
 
-console.log(links);
-
-const nodes = {};
-
-// Compute the distinct nodes from the links.
-// tslint:disable-next-line:no-shadowed-variable
-// @ts-ignore
-// tslint:disable-next-line:no-shadowed-variable typedef
-links.forEach(function(link) {
-    link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
-    link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
-});
-
-const force = d3.layout.force()
-    .nodes(d3.values(nodes))
-    .links(links)
-    .size([960, 500])
-    .linkDistance(60)
-    .charge(-300)
-    .on("tick", tick)
-    .start();
-
-const svg = d3.select("body").append("svg")
-    .attr("width", 960)
-    .attr("height", 500);
-
-const link = svg.selectAll(".link")
-    .data(force.links())
-    .enter().append("line")
-    .attr("class", "link");
-
-const node = svg.selectAll(".node")
-    .data(force.nodes())
-    .enter().append("g")
-    .attr("class", "node")
-    .on("mouseover", mouseover)
-    .on("mouseout", mouseout)
-    .call(force.drag);
-
-node.append("circle")
-    .attr("r", 8);
-
-node.append("text")
-    .attr("x", 12)
-    .attr("dy", ".35em")
-    // tslint:disable-next-line:typedef
-    .text(function(d) { return d.name; });
-
-// tslint:disable-next-line:typedef
-function tick() {
-    link
-        // tslint:disable-next-line:typedef
-        .attr("x1", function(d) { return d.source.x; })
-        // tslint:disable-next-line:typedef
-        .attr("y1", function(d) { return d.source.y; })
-        // tslint:disable-next-line:typedef
-        .attr("x2", function(d) { return d.target.x; })
-        // tslint:disable-next-line:typedef
-        .attr("y2", function(d) { return d.target.y; });
-
-    node
-        // tslint:disable-next-line:typedef
-        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-}
-
-// tslint:disable-next-line:typedef
-function mouseover() {
-    // tslint:disable-next-line:no-invalid-this
-    d3.select(this).select("circle").transition()
-        .duration(750)
-        .attr("r", 16);
-}
-
-// tslint:disable-next-line:typedef
-function mouseout() {
-    // tslint:disable-next-line:no-invalid-this
-    d3.select(this).select("circle").transition()
-        .duration(750)
-        .attr("r", 8);
-}
+// const treeData: object = Tree.print(finds);
+//
+// console.log(treeData);
+//
+// // ************** Generate the tree diagram	 *****************
+// const margin = {top: 20, right: 120, bottom: 20, left: 120},
+//     width = 960 - margin.right - margin.left,
+//     height = 500 - margin.top - margin.bottom;
+//
+// let i = 0;
+//
+// const tree = d3.layout.tree()
+//     .size([height, width]);
+//
+// const diagonal = d3.svg.diagonal()
+//     // tslint:disable-next-line:typedef
+//     .projection(function(d) { return [d.y, d.x]; });
+//
+// const svg = d3.select("body").append("svg")
+//     .attr("width", width + margin.right + margin.left)
+//     .attr("height", height + margin.top + margin.bottom)
+//     .append("g")
+//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+//
+// const root = treeData;
+//
+// update(root);
+//
+// // tslint:disable-next-line:typedef
+// function update(source) {
+//
+//     // Compute the new tree layout.
+//     const nodes = tree.nodes(root).reverse(),
+//         links = tree.links(nodes);
+//
+//     // Normalize for fixed-depth.
+//     // tslint:disable-next-line:typedef
+//     nodes.forEach(function(d) { d.y = d.depth * 180; });
+//
+//     // Declare the nodes…
+//     const node = svg.selectAll("g.node")
+//         // tslint:disable-next-line:typedef
+//         .data(nodes, function(d) { return d.id || (d.id = ++i); });
+//
+//     // Enter the nodes.
+//     const nodeEnter = node.enter().append("g")
+//         .attr("class", "node")
+//         // tslint:disable-next-line:typedef
+//         .attr("transform", function(d) {
+//             return "translate(" + d.y + "," + d.x + ")"; });
+//
+//     nodeEnter.append("circle")
+//         .attr("r", 10)
+//         .style("fill", "#fff");
+//
+//     nodeEnter.append("text")
+//         // tslint:disable-next-line:typedef
+//         .attr("x", function(d) {
+//             return d.children || d._children ? -13 : 13; })
+//         .attr("dy", ".35em")
+//         // tslint:disable-next-line:typedef
+//         .attr("text-anchor", function(d) {
+//             return d.children || d._children ? "end" : "start"; })
+//         // tslint:disable-next-line:typedef
+//         .text(function(d) { return d.name; })
+//         .style("fill-opacity", 1);
+//
+//     // Declare the links…
+//     const link = svg.selectAll("path.link")
+//         // tslint:disable-next-line:typedef
+//         .data(links, function(d) { return d.target.id; });
+//
+//     // Enter the links.
+//     link.enter().insert("path", "g")
+//         .attr("class", "link")
+//         .attr("d", diagonal);
+// }

@@ -2,7 +2,7 @@ import { BinaryTreeNode } from "./binary-tree-node";
 
 export class BinaryTree<T> {
     private root: BinaryTreeNode<T>;
-    private _node: object[] = [];
+   // private _node: object = [];
     public find(key: number): BinaryTreeNode<T> {
         let current: BinaryTreeNode<T> = this.root;
         while (current.getKey() !== key) {
@@ -35,19 +35,12 @@ export class BinaryTree<T> {
         }
 
     }
-    public print(startNode: BinaryTreeNode<T>): object {
+    /*public print(startNode: BinaryTreeNode<T>): void {
         if (startNode !== undefined) {
             this.print(startNode.getLeft());
-            if (startNode.getLeft() !== undefined) {
-                this._node.push({"source": startNode.getKey(), "target": startNode.getLeft().getKey()});
-            }
-            if (startNode.getRight() !== undefined) {
-                this._node.push({"source": startNode.getKey(), "target": startNode.getRight().getKey()});
-            }
             this.print(startNode.getRight());
         }
-        return this._node;
-    }
+    }*/
     public getSuccessor(deleteNode: BinaryTreeNode<T>): BinaryTreeNode<T> {
         let parentSuccessor: BinaryTreeNode<T> = deleteNode;
         let successor: BinaryTreeNode<T>;

@@ -7,19 +7,15 @@ export class BinaryTreeNode<T> {
         this._Data = insertData;
         this._Key = key;
     }
-    public printNode(): void {
-        /* const links: object[] = [];
-        if (this._Right !== undefined) {
-            links.push({"source": this.getKey(), "target": this._Right.getKey()});
-            if (this._Right._Right !== undefined) {
-                links.push({"source": this._Right.getKey(), "target": this._Right._Right.getKey()});
-            }
-        }
-        if (this._Left !== undefined) {
-            links.push({"source": this.getKey(), "target": this._Left.getKey()});
-        }
-        // console.log(`Key: ${this._Key} Data: ${this._Data.toString()}`);
-        return links; */
+    public printNode(): object {
+        const tree: object[] = [];
+        tree.push({
+            "key": this._Key,
+            "data": this._Data,
+            "leftChild": this._Left,
+            "rightChild": this._Right
+        });
+        return tree;
     }
     public getLeft(): BinaryTreeNode<T> {
         return this._Left;
