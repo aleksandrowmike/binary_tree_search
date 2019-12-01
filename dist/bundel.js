@@ -42,8 +42,9 @@ exports.BinaryTreeNode = BinaryTreeNode;
 Object.defineProperty(exports, "__esModule", { value: true });
 var binary_tree_node_1 = require("./binary-tree-node");
 var BinaryTree = /** @class */function () {
-    function BinaryTree() {}
-    // private _node: object = [];
+    function BinaryTree() {
+        this._node = [];
+    }
     BinaryTree.prototype.find = function (key) {
         var current = this.root;
         while (current.getKey() !== key) {
@@ -79,12 +80,46 @@ var BinaryTree = /** @class */function () {
             }
         }
     };
-    /*public print(startNode: BinaryTreeNode<T>): void {
+    BinaryTree.prototype.print = function (startNode) {
         if (startNode !== undefined) {
-            this.print(startNode.getLeft());
-            this.print(startNode.getRight());
+            if (startNode.getLeft() !== undefined) {
+                var left = document.createElement("div");
+                left.id = "" + startNode.getLeft().getKey();
+                left.setAttribute("data-branch", "left");
+                var text = document.createElement("span");
+                text.append(startNode.getLeft().getKey().toString());
+                left.appendChild(text);
+                if (document.getElementById(startNode.getKey().toString())) {
+                    document.getElementById(startNode.getKey().toString()).appendChild(left);
+                } else {
+                    document.getElementById(startNode.getKey().toString()).appendChild(left);
+                }
+                this.print(startNode.getLeft());
+                if (startNode.getRight()) {
+                    left.classList.add("left");
+                }
+                if (startNode.getLeft()) {
+                    left.classList.add("left");
+                }
+            }
+            if (startNode.getRight() !== undefined) {
+                var right = document.createElement("div");
+                right.id = "" + startNode.getRight().getKey();
+                right.setAttribute("data-branch", "right");
+                var text = document.createElement("span");
+                text.append(startNode.getRight().getKey().toString());
+                right.appendChild(text);
+                if (document.getElementById(startNode.getKey().toString())) {
+                    document.getElementById(startNode.getKey().toString()).appendChild(right);
+                }
+                this.print(startNode.getRight());
+                if (startNode.getRight()) {
+                    right.classList.add("right");
+                }
+            }
         }
-    }*/
+        return this._node;
+    };
     BinaryTree.prototype.getSuccessor = function (deleteNode) {
         var parentSuccessor = deleteNode;
         var successor;
@@ -162,101 +197,32 @@ exports.BinaryTree = BinaryTree;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-// import * as d3 from "d3";
 var binary_tree_1 = require("./binary-tree");
 var Tree = new binary_tree_1.BinaryTree();
 Tree.insert("John", 3);
 Tree.insert("T1000", 8);
-Tree.insert("Sara", 1);
-Tree.insert("T800", 2);
-Tree.insert("T400", 4);
-Tree.insert("T900", 9);
 Tree.insert("T1500", 15);
 Tree.insert("T500", 5);
 Tree.insert("T1200", 12);
 Tree.insert("T1100", 11);
 Tree.insert("T1300", 13);
 Tree.insert("T1000", 10);
+Tree.insert("T1000", 17);
+Tree.insert("Sara", 1);
+Tree.insert("T800", 2);
+Tree.insert("T400", 4);
+Tree.insert("T900", 9);
 var key = 3;
 var finds = Tree.find(key);
-console.log(finds.printNode());
-// const treeData: object = Tree.print(finds);
-//
-// console.log(treeData);
-//
-// // ************** Generate the tree diagram	 *****************
-// const margin = {top: 20, right: 120, bottom: 20, left: 120},
-//     width = 960 - margin.right - margin.left,
-//     height = 500 - margin.top - margin.bottom;
-//
-// let i = 0;
-//
-// const tree = d3.layout.tree()
-//     .size([height, width]);
-//
-// const diagonal = d3.svg.diagonal()
-//     // tslint:disable-next-line:typedef
-//     .projection(function(d) { return [d.y, d.x]; });
-//
-// const svg = d3.select("body").append("svg")
-//     .attr("width", width + margin.right + margin.left)
-//     .attr("height", height + margin.top + margin.bottom)
-//     .append("g")
-//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-//
-// const root = treeData;
-//
-// update(root);
-//
-// // tslint:disable-next-line:typedef
-// function update(source) {
-//
-//     // Compute the new tree layout.
-//     const nodes = tree.nodes(root).reverse(),
-//         links = tree.links(nodes);
-//
-//     // Normalize for fixed-depth.
-//     // tslint:disable-next-line:typedef
-//     nodes.forEach(function(d) { d.y = d.depth * 180; });
-//
-//     // Declare the nodes…
-//     const node = svg.selectAll("g.node")
-//         // tslint:disable-next-line:typedef
-//         .data(nodes, function(d) { return d.id || (d.id = ++i); });
-//
-//     // Enter the nodes.
-//     const nodeEnter = node.enter().append("g")
-//         .attr("class", "node")
-//         // tslint:disable-next-line:typedef
-//         .attr("transform", function(d) {
-//             return "translate(" + d.y + "," + d.x + ")"; });
-//
-//     nodeEnter.append("circle")
-//         .attr("r", 10)
-//         .style("fill", "#fff");
-//
-//     nodeEnter.append("text")
-//         // tslint:disable-next-line:typedef
-//         .attr("x", function(d) {
-//             return d.children || d._children ? -13 : 13; })
-//         .attr("dy", ".35em")
-//         // tslint:disable-next-line:typedef
-//         .attr("text-anchor", function(d) {
-//             return d.children || d._children ? "end" : "start"; })
-//         // tslint:disable-next-line:typedef
-//         .text(function(d) { return d.name; })
-//         .style("fill-opacity", 1);
-//
-//     // Declare the links…
-//     const link = svg.selectAll("path.link")
-//         // tslint:disable-next-line:typedef
-//         .data(links, function(d) { return d.target.id; });
-//
-//     // Enter the links.
-//     link.enter().insert("path", "g")
-//         .attr("class", "link")
-//         .attr("d", diagonal);
-// }
+var root = document.createElement("div");
+root.id = "" + key;
+root.setAttribute("data-branch", "root");
+var text = document.createElement("span");
+text.append(key.toString());
+text.classList.add("root-text");
+root.appendChild(text);
+document.getElementById("container").appendChild(root);
+Tree.print(finds);
 
 },{"./binary-tree":2}]},{},[3])
 
