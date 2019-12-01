@@ -1,0 +1,81 @@
+span{
+    border: 2px solid #000;
+    border-radius: 50%;
+    padding: 10px 15px;
+    background-color: #fff;
+    z-index: 2;
+}
+div[data-branch=root]{
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+}
+.root-text{
+    display: block;
+    margin-right: 14%;
+    width: 10%;
+    height: 50px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+}
+.root-text + div[data-branch=left]{
+    left: 30%;
+    margin-top: 20px;
+}
+.root-text~ div[data-branch=right]{
+    margin-top: 25px;
+}
+.root-text + div[data-branch=left]:after{
+     height: 100px;
+     transform: translateY(20px) translateX(34px) rotate(71deg);
+ }
+.root-text ~ div[data-branch=right]:before{
+    height: 100px;
+    transform: translateY(25px) translateX(-24px) rotate(-58deg);
+}
+
+.left:after{
+    content: "";
+    width: 2px;
+    background-color: #000;
+    height: 50px;
+    position: absolute;
+    bottom: -10%;
+    transform: rotate(40deg);
+    z-index: -1;
+    right: 0;
+}
+.right:before{
+    content: "";
+    width: 2px;
+    background-color: #000;
+    height: 50px;
+    position: absolute;
+    bottom: 64%;
+    transform: rotate(-40deg);
+    z-index: -1;
+}
+div[data-branch=left]{
+    margin-right: 50px;
+    width: 50px;
+    top: 50px;
+    position: absolute;
+    right: 0px;
+    z-index: 1;
+}
+div[data-branch=right]{
+    margin-left: 50px;
+    width: 50px;
+    display: flex;
+    position: absolute;
+    top: 50px;
+}
+div[data-branch=right] > div[data-branch=right] {
+}
+.noneRight:before{
+    display: none;
+}
+.noneLeft:after{
+    display: none;
+}

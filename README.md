@@ -1,1 +1,1 @@
-# binary_search_tree
+# Бинарное дерево поиска (Binary search tree)

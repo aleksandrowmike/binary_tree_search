@@ -2,7 +2,7 @@ import { BinaryTreeNode } from "./binary-tree-node";
 
 export class BinaryTree<T> {
     private root: BinaryTreeNode<T>;
-   // private _node: object = [];
+    private _node: object[] = [];
     public find(key: number): BinaryTreeNode<T> {
         let current: BinaryTreeNode<T> = this.root;
         while (current.getKey() !== key) {
@@ -35,12 +35,46 @@ export class BinaryTree<T> {
         }
 
     }
-    /*public print(startNode: BinaryTreeNode<T>): void {
+    public print(startNode: BinaryTreeNode<T>): object[] {
         if (startNode !== undefined) {
-            this.print(startNode.getLeft());
-            this.print(startNode.getRight());
+            if (startNode.getLeft() !== undefined) {
+                const left = document.createElement("div");
+                left.id = "" + startNode.getLeft().getKey();
+                left.setAttribute("data-branch", "left");
+                const text = document.createElement("span");
+                text.append(startNode.getLeft().getKey().toString());
+                left.appendChild(text);
+                if (document.getElementById(startNode.getKey().toString())) {
+                    document.getElementById(startNode.getKey().toString()).appendChild(left);
+                } else {
+                    document.getElementById(startNode.getKey().toString()).appendChild(left);
+                }
+                this.print(startNode.getLeft());
+                if (startNode.getRight()) {
+                    left.classList.add("left");
+                }
+                if (startNode.getLeft()) {
+                    left.classList.add("left");
+                }
+            }
+            if (startNode.getRight() !== undefined) {
+                const right = document.createElement("div");
+                right.id = "" + startNode.getRight().getKey();
+                right.setAttribute("data-branch", "right");
+                const text = document.createElement("span");
+                text.append(startNode.getRight().getKey().toString());
+                right.appendChild(text);
+                if (document.getElementById(startNode.getKey().toString())) {
+                    document.getElementById(startNode.getKey().toString()).appendChild(right);
+                }
+                this.print(startNode.getRight());
+                if (startNode.getRight()) {
+                    right.classList.add("right");
+                }
+            }
         }
-    }*/
+        return this._node;
+    }
     public getSuccessor(deleteNode: BinaryTreeNode<T>): BinaryTreeNode<T> {
         let parentSuccessor: BinaryTreeNode<T> = deleteNode;
         let successor: BinaryTreeNode<T>;
