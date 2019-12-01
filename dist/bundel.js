@@ -42,11 +42,9 @@ exports.BinaryTreeNode = BinaryTreeNode;
 Object.defineProperty(exports, "__esModule", { value: true });
 var binary_tree_node_1 = require("./binary-tree-node");
 var BinaryTree = /** @class */function () {
-    function BinaryTree() {
-        this._node = [];
-    }
+    function BinaryTree() {}
     BinaryTree.prototype.find = function (key) {
-        var current = this.root;
+        var current = this._root;
         while (current.getKey() !== key) {
             current = key < current.getKey() ? current.getLeft() : current.getRight();
             if (current === undefined) {
@@ -56,11 +54,11 @@ var BinaryTree = /** @class */function () {
         return current;
     };
     BinaryTree.prototype.insert = function (insertData, key) {
-        var current = this.root;
+        var current = this._root;
         var parent;
         var newNode = new binary_tree_node_1.BinaryTreeNode(insertData, key);
-        if (this.root === undefined) {
-            this.root = newNode;
+        if (this._root === undefined) {
+            this._root = newNode;
         } else {
             while (true) {
                 parent = current;
@@ -118,11 +116,10 @@ var BinaryTree = /** @class */function () {
                 }
             }
         }
-        return this._node;
     };
     BinaryTree.prototype.getSuccessor = function (deleteNode) {
-        var parentSuccessor = deleteNode;
-        var successor;
+        var parentSuccessor;
+        var successor = deleteNode;
         var current = successor.getRight();
         while (current !== undefined) {
             parentSuccessor = successor;
@@ -136,7 +133,7 @@ var BinaryTree = /** @class */function () {
         return successor;
     };
     BinaryTree.prototype.delete = function (key) {
-        var current = this.root;
+        var current = this._root;
         var parent;
         var isLeft = false;
         while (current.getKey() !== key) {
@@ -153,7 +150,7 @@ var BinaryTree = /** @class */function () {
             }
         }
         if (current.getLeft() === undefined && current.getRight() === undefined) {
-            if (current === this.root) {
+            if (current === this._root) {
                 current = undefined;
             } else if (isLeft) {
                 parent.setLeft(undefined);
@@ -161,16 +158,16 @@ var BinaryTree = /** @class */function () {
                 parent.setRight(undefined);
             }
         } else if (current.getRight() === undefined) {
-            if (current === this.root) {
-                this.root = current.getLeft();
+            if (current === this._root) {
+                this._root = current.getLeft();
             } else if (isLeft) {
                 parent.setLeft(current.getLeft());
             } else {
                 current.setRight(current.getLeft());
             }
         } else if (current.getLeft() === undefined) {
-            if (current === this.root) {
-                this.root = current.getRight();
+            if (current === this._root) {
+                this._root = current.getRight();
             } else if (isLeft) {
                 parent.setLeft(current.getRight());
             } else {
@@ -178,8 +175,9 @@ var BinaryTree = /** @class */function () {
             }
         } else {
             var successor = this.getSuccessor(current);
-            if (current === this.root) {
-                this.root = successor;
+            console.log(successor);
+            if (current === this._root) {
+                this._root = successor;
             } else if (isLeft) {
                 parent.setLeft(successor);
             } else {
@@ -188,6 +186,16 @@ var BinaryTree = /** @class */function () {
             successor.setLeft(current.getLeft());
         }
         return true;
+    };
+    BinaryTree.prototype.createRoot = function (key) {
+        var root = document.createElement("div");
+        root.id = "" + key;
+        root.setAttribute("data-branch", "root");
+        var text = document.createElement("span");
+        text.append(key.toString());
+        text.classList.add("root-text");
+        root.appendChild(text);
+        document.getElementById("container").appendChild(root);
     };
     return BinaryTree;
 }();
@@ -214,15 +222,30 @@ Tree.insert("T400", 4);
 Tree.insert("T900", 9);
 var key = 3;
 var finds = Tree.find(key);
-var root = document.createElement("div");
-root.id = "" + key;
-root.setAttribute("data-branch", "root");
-var text = document.createElement("span");
-text.append(key.toString());
-text.classList.add("root-text");
-root.appendChild(text);
-document.getElementById("container").appendChild(root);
+Tree.createRoot(key);
 Tree.print(finds);
+var add = document.getElementById("add");
+add.addEventListener("click", function () {
+    Tree.insert(document.getElementById("addKey").value, Number(document.getElementById("addKey").value));
+    document.getElementById("container").innerHTML = "";
+    Tree.createRoot(key);
+    Tree.print(finds);
+});
+var del = document.getElementById("delete");
+del.addEventListener("click", function () {
+    Tree.delete(Number(document.getElementById("deleteKey").value));
+    document.getElementById("container").innerHTML = "";
+    Tree.createRoot(key);
+    Tree.print(finds);
+});
+var find = document.getElementById("find");
+find.addEventListener("click", function () {
+    key = Number(document.getElementById("findKey").value);
+    finds = Tree.find(key);
+    document.getElementById("container").innerHTML = "";
+    Tree.createRoot(key);
+    Tree.print(finds);
+});
 
 },{"./binary-tree":2}]},{},[3])
 
