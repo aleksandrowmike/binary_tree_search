@@ -1,3 +1,9 @@
+.wrapper{
+    display: flex;
+}
+#container{
+    width: 70%;
+}
 span{
     border: 2px solid #000;
     border-radius: 50%;
